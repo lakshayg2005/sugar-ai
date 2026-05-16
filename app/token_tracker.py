@@ -109,7 +109,7 @@ class TokenTracker:
 
         # Log the usage
         logger.info(
-            f"📊 Token Usage - User: {user_name} - "
+            f"Token Usage - User: {user_name} - "
             f"Prompt: {prompt_tokens} - Completion: {completion_tokens} - "
             f"Total: {total_tokens} - Cost: ${cost:.6f}"
         )
@@ -135,12 +135,12 @@ class TokenTracker:
             db.commit()
             db.refresh(usage_record)
 
-            logger.info(f"✅ Token usage saved to database (ID: {usage_record.id})")
+            logger.info(f"Token usage saved to database (ID: {usage_record.id})")
 
             db.close()
 
         except Exception as e:
-            logger.error(f"❌ Error saving token usage to database: {e}")
+            logger.error(f"Error saving token usage to database: {e}")
 
         return {
             "prompt_tokens": prompt_tokens,

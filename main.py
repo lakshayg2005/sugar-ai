@@ -40,9 +40,7 @@ app = create_app()
 async def startup_event():
     """Initialize data on app startup"""
 
-    # -----------------------------
     # DB initialization
-    # -----------------------------
     db = next(get_db())
     sync_env_keys_to_db(db)
 
@@ -51,9 +49,7 @@ async def startup_event():
     create_tables()
     logger.info(" Database tables created/verified (including token_usage)")
 
-    # -----------------------------
     # Model selection
-    # -----------------------------
     if settings.DEV_MODE:
         active_model = settings.DEV_MODEL_NAME
         logger.info(f"DEV_MODE active. Loading lightweight model: {active_model}")
@@ -61,9 +57,7 @@ async def startup_event():
         active_model = settings.PROD_MODEL_NAME
         logger.info(f"PRODUCTION mode. Loading full model: {active_model}")
 
-    # -----------------------------
     # Initialize RAG agent
-    # -----------------------------
     initialized_agent = RAGAgent(model=active_model)
 
     # Setup vector store
@@ -71,9 +65,7 @@ async def startup_event():
         initialized_agent.setup_vectorstore(settings.DOC_PATHS)
         logger.info(" Vector store initialized")
 
-    # -----------------------------
-    # 🔥 TOKEN TRACKER INTEGRATION (IMPORTANT PART)
-    # -----------------------------
+    # TOKEN TRACKER INTEGRATION
     try:
         import tiktoken
         from app.token_tracker import TokenTracker
@@ -90,9 +82,7 @@ async def startup_event():
         initialized_agent.token_tracker = None
         logger.warning(f"Token tracker not initialized: {e}")
 
-    # -----------------------------
     # Inject into API layer
-    # -----------------------------
     api.agent = initialized_agent
     app.state.agent = initialized_agent
 

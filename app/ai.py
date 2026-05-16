@@ -314,7 +314,7 @@ ANSWER:"""
             # Clean output
             # answer = clean_output(answer)
 
-            # ✅ TRACK TOKEN USAGE
+            # TRACK TOKEN USAGE
             token_stats = {}
             if api_key and user_name:
                 token_stats = self.token_tracker.track_usage(

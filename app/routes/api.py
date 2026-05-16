@@ -117,7 +117,7 @@ async def ask_question(
     )
 
     try:
-        # ✅ MODIFIED: Pass api_key and user_name for token tracking
+        # MODIFIED: Pass api_key and user_name for token tracking
         answer, token_stats = agent.run(
             question=question, api_key=api_key, user_name=user_info["name"]
         )
@@ -136,12 +136,12 @@ async def ask_question(
             "count", 0
         )
 
-        # ✅ RETURN TOKEN STATS IN RESPONSE
+        # RETURN TOKEN STATS IN RESPONSE
         return {
             "answer": answer,
             "user": user_info["name"],
             "quota": {"remaining": remaining, "total": settings.MAX_DAILY_REQUESTS},
-            "tokens": token_stats,  # ← NEW: Include token usage stats
+            "tokens": token_stats,
             "response_time_seconds": round(process_time, 2),
         }
 
@@ -429,9 +429,7 @@ async def change_model(
         raise HTTPException(status_code=500, detail=f"Error changing model: {str(e)}")
 
 
-# ============================================
 # TOKEN USAGE ANALYTICS ENDPOINTS
-# ============================================
 
 
 @router.get("/usage/my-stats")
